@@ -1,5 +1,5 @@
 {
-  "name": "atr-template-ts",
+  "name": "atr-cex-tinkoff-investments-cron",
   "version": "0.1.0",
   "private": true,
   "standard": "ignore",
@@ -7,13 +7,18 @@
   "license": "Apache-2.0",
   "workspaces": [
     "packages/**",
-    "shared/*"
+    "shared/**"
   ],
   "scripts": {
+    "------------ git ------------": "",
+    "git submodule add *": "git submodule add --force https://github.com/Dennis-Nedry-From-Jurassic-Park/ms-tinkoff-investments-v2.git shared/ms-tinkoff-investments-v2",
+    "git submodule update": "git submodule update --init --recursive && git submodule foreach --recursive git pull origin main",
     "------------ pnpm ------------": "",
     "pnpm:add": "npx pnpm add -g pnpm",
     "pnpm:setup": "npx pnpm setup",
-    "pnpm:install": "npx pnpm install",
+    "npx npkill": "npx npkill --sort size",
+    "pnpm:remove": "npx pnpm uninstall --recursive",
+    "pnpm:install": "npx pnpm -r install --recursive",
     "----------- docker -----------": "",
     "docker:run:stop:all": "docker stop $(docker ps -a -q)",
     "docker:run:ms:app": "docker-compose -f docker-compose.yml up -d",
@@ -21,7 +26,12 @@
     "docker:tag:ms:cron": "docker tag 7097bc9a6667f62ef8cec701a78e785a1a8c059fd4ebe0c5c4b3ebbcb6761797 deps:0.0.1",
     "docker:build:ms:cron": "docker build . --no-cache --progress=tty -f docker/ms-cron/Dependencies.Dockerfile",
     "docker:run:ms:cron": "docker-compose -f docker-compose-cron.yml up -d --quiet-pull --build atr_ms_template",
+    "----------- doppler -----------": "",
+    "doppler:login": "doppler login",
+    "doppler:setup": "doppler setup",
+
     "api-ti-orders": "ts-node packages/backend/apps/ms-atr/src/api.ti.orders.ts",
+    "main": "doppler run -- ts-node packages/backend/apps/ms-cron/src/main.ts",
     "build": "nest build",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -31,8 +41,15 @@
     "test": "jest"
   },
   "dependencies": {
-    "rxjs": "^7.5.6"
+    "rxjs": "^7.5.6",
+    "ms-tinkoff-investments-v2": "workspace:^"
   },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "@types/node": "^18.11.18",
+    "typescript": "^4.7.4"
+  },
+  "packageManager": "^pnpm@7.26.3",
   "browserslist": {
     "production": [
       ">0.2%",

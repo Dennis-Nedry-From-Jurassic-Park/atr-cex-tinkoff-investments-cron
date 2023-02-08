@@ -159,5 +159,4 @@ dist
 
 !tsconfig.app.json
 
-/shared/ms-auth
-/shared/ms-base
+/shared/
